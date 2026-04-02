@@ -1,8 +1,8 @@
 services:
   fs:
     container_name: fs
-    image: freeswitch:bullseye
+    image: freeswitch:trixie
     build:
       context: .
-      dockerfile: ./freeswitch/docker/examples/Debian11/Dockerfile
+      dockerfile: ./fs.Dockerfile
     network_mode: host
