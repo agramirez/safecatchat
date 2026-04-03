@@ -66,12 +66,12 @@ RUN cd /usr/src/freeswitch && make -j`nproc` && make install
 ENV PATH="$PATH:/usr/local/freeswitch/bin"
 
 # change default password...acheles heal of freeswitch
-RUN FS_PASS=$(base64 </dev/urandom | head -c 16) && sed "s|default_password=1234|default_password=$FS_PASS|" /usr/local/freeswitch/conf/vars.xml
+RUN FS_PASS=$(base64 </dev/urandom | head -c 16) && sed -i "s|default_password=1234|default_password=$FS_PASS|" /usr/local/freeswitch/conf/vars.xml
 
 # Cleanup the image
 RUN apt-get clean
 
 # Uncomment to cleanup even more
-RUN rm -rf /usr/src/*
+#RUN rm -rf /usr/src/*
 
-CMD ["sleep","infinity"]
+CMD ["/usr/local/freeswitch/bin/freeswitch"]
