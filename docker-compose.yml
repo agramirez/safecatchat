@@ -1,8 +1,26 @@
 services:
   fs:
-    container_name: fs
-    image: freeswitch:trixie
+    container_name: freeswitch
+    image: agramirez/freeswitch:trixie
     build:
       context: .
-      dockerfile: ./fs.Dockerfile
+      dockerfile: fs.Dockerfile
+    volumes:
+      - ./data/fs/conf:/usr/local/freeswitch/conf
+      - ./data/fs/log:/var/log/freeswitch
     network_mode: host
+  db:
+    container_name: postgres
+    image: agramirez/postgres:latest
+    build:
+      context: .
+      dockerfile: pg.Dockerfile
+    volumes:
+      - ./data/db/data:/var/lib/postgresql/data
+      - ./data/db/log:/var/log/postgresql
+    networks:
+      - dbnet
+
+networks:
+  dbnet:
+    name: dbnet
